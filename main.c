@@ -7,6 +7,7 @@ int main(){
     pnode head;
     char let = '\0';
     scanf(" %c",&let);
+    
     while(flag == 1){
         
         if(let == 'A'){
