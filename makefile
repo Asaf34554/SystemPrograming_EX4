@@ -5,7 +5,7 @@ FLAGS = -Wall -g -fPIC
 all: .graph edges.o node.o algo.o main.o
 
 .graph: main.o algo.o edges.o node.o
-	$(CC) $(FLAGS) main.o algo.o edges.o node.o -o.graph 
+	$(CC) $(FLAGS) main.o algo.o edges.o node.o -o .graph 
 algo.o: algo.c node.h edges.h graph.h
 	$(CC) $(FLAGS) -c algo.c
 main.o: main.c graph.h node.h

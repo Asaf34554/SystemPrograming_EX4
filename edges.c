@@ -12,20 +12,22 @@ pedge create_edge(){
 char create_edges(pnode vertex, pnode* head){
     char c[10] = "\0";
     int d=0;
-    pnode nextnode;
 
     while(1){
         pedge temp = vertex->edges;
         scanf(" %s",c);
-        if(c[0]>'A'&& c[0]<'z'){
+        printf("the first scanf in create_edges %c\n",c[0]);
+        if(c[0] == 'n' || c[0] == 'D' || c[0] == 'A' || c[0] == 'S' || c[0] == 'B' || c[0] == 'T' ){
             return c[0];
         }
         int x=0;
         for(int i=0;i<strlen(c);i++){
             x=x*10+(c[i]-48);
         }
-        nextnode = get_node(head,x);
-        while (temp->next != NULL)
+
+        pnode nextnode = get_node(head,x);
+        printf("nextnodnum:%d\n",nextnode->node_num);
+        while (temp!=NULL && temp->next != NULL)
         {
             temp = temp->next;
         }
@@ -39,6 +41,7 @@ char create_edges(pnode vertex, pnode* head){
         scanf(" %d",&d);
         temp->weight=d;
         temp->endpoint = nextnode;
+        printf("edge from %d to %d, weight:%d\n",vertex->node_num,temp->endpoint->node_num,temp->weight);
     }
     
 }

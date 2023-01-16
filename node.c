@@ -12,14 +12,19 @@ pnode create_node(int index){
 }
 pnode get_node(pnode *head, int ver){
     pnode nget = (*head);
-    while(nget->node_num!=ver)
+    while(!(nget->next) && nget->node_num != ver)
     {
-        nget = nget->next;
-        if(!nget){
-            return NULL;
-        }
+        nget=nget->next;
     }
-    return nget;
+    if(nget->node_num==ver){
+        return nget;
+    }
+    else{
+        nget = nget->next;
+        return nget;
+    }
+    // printf("null\n");
+    // return nget;
 }
 void del_all_ver(pnode* head){
     pnode run = (*head);

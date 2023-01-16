@@ -2,7 +2,7 @@
 #include "graph.h"
 #include <stdlib.h>
 #include <string.h>
-#include "node.c"
+#include "node.h"
 #include "edges.h"
 
 char build_graph_cmd(pnode *head){
@@ -12,50 +12,63 @@ char build_graph_cmd(pnode *head){
     char c[10] = "\0";
     printf("Please enter the number of vertices: \n");
     scanf(" %d",&n);
-    pnode temp = create_node(i);   
+    pnode temp = create_node(i);
     (*nhead) = temp;
     for(i=1;i<n;i++){
+        printf(" %d\n",temp->node_num);
         pnode temp1 = create_node(i);
         temp->next=temp1;
         temp=temp1;
     }
-   // nhead=&head;
     pnode v;
     scanf(" %s",c);
-    while(c[0] != 'D' && c[0] != 'A' && c[0] != 'S' && c[0] != 'B' && c[0] != 'T'){
-        if(strcmp(c,"n")==0){
-          scanf(" %s",c);
-          x=0;
-          if(c[0]<='9' && c[0] >= '0'){
-            for(int i=0;i<strlen(c);i++){
-                x=x*10+(c[i]-48);
+    while(1){
+        if(c[0] == 'n'){
+            scanf(" %s",c);
+            x=0;
+            if(c[0]<='9' && c[0] >= '0'){
+                for(int i=0;i<strlen(c);i++){
+                    x=x*10+(c[i]-48);
                 }
+                v = get_node(head,x);
+                printf("%d , %d\n",x,v->node_num);
+                c[0] = create_edges(v,head);
+                printf(" when we return from create_edges %s\n",c);
             }    
-            v = get_node(head,x);
-            char ch = create_edges(v,head);
-            char stemp[1] = "\0";
-            stemp[0] = ch;
-            strcpy(c,stemp);
+        }
+        else {
+            printf("we go out from A func\n");
+            return c[0];
         }
     }
-
     return c[0];
 }
 char insert_node_cmd(pnode *head){
     int d;
-    pnode nHead = *head;
+    pnode nHead = (*head);
+    printf("entered B, head first ver=%d\n",nHead->node_num);
     scanf(" %d",&d);
+    printf("bef get_node\n");
     pnode vertex = get_node(head,d);
-    if(vertex== NULL){
+    printf("after get_node %d\n",vertex->node_num);
+
+    if(vertex){
+        printf("vertex:%d , edges:%d\n",vertex->node_num,vertex->edges->weight);
+        del_edges(vertex);
+        return create_edges(vertex,head);
+
+    }
+    else{
+        printf("get to if (new ver)\n");
         vertex = create_node(d);
-        while(nHead->next != NULL){
+        while(!(nHead->next)){
+            printf("nHead %d\n",nHead->node_num);
             nHead = nHead->next;
         }
         nHead->next=vertex;
-        return create_edges(vertex,head);
-    }
-    else{
-        del_edges(vertex);
+        printf("hey\n");
+        printf("new ver: %d %d\n",nHead->node_num,vertex->node_num);
+
         return create_edges(vertex,head);
     }
 }
