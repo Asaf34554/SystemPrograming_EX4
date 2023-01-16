@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "graph.h"
+#include "node.h"
 
 
 int main(){
@@ -22,10 +23,15 @@ int main(){
             scanf(" %c",&let);
         }
         if(let == 'S'){
-            void shortsPath_cmd(head);
+            shortsPath_cmd(head);
             scanf( "%c",&let);
         }
-        
+        if(let == 'Y'){
+            del_all_ver(&head);
+            break;
+            
+        }
     }
+
     
 }

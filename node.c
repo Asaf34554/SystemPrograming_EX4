@@ -14,8 +14,7 @@ pnode get_node(pnode head, int ver){
     {
         nget = nget->next;
         if(!nget){
-            nget=-1;
-            break;
+            return NULL;
         }
     }
     return nget;
