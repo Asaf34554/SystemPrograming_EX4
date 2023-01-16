@@ -4,7 +4,7 @@
 
 
 pnode create_node(int index);
-pnode get_node(pnode head, int ver);
+pnode get_node(pnode *head, int ver);
 void del_all_ver(pnode* head);
 void del_ver(pnode ver,pnode* head);
 

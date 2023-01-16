@@ -2,9 +2,7 @@
 #include "graph.h"
 #include <stdlib.h>
 #include "node.h"
-#include "edges.h"
 #include <string.h>
-
 
 
 pedge create_edge(){
@@ -17,21 +15,16 @@ char create_edges(pnode vertex, pnode* head){
     pnode nextnode;
 
     while(1){
-        printf("hey assaf");
         pedge temp = vertex->edges;
-        printf(" %d\n" ,temp->weight);
-
         scanf(" %s",c);
-        printf( " %s \n",c);
         if(c[0]>'A'&& c[0]<'z'){
             return c[0];
         }
         int x=0;
-        for(int i=0; i < strlen(c);i++){
+        for(int i=0;i<strlen(c);i++){
             x=x*10+(c[i]-48);
         }
-        printf("aaaaaaaa");
-        nextnode = get_node((*head),x);
+        nextnode = get_node(head,x);
         while (temp->next != NULL)
         {
             temp = temp->next;
@@ -43,13 +36,12 @@ char create_edges(pnode vertex, pnode* head){
             temp->next = create_edge();
             temp = temp->next;
         }
-        scanf("%d",&d);
+        scanf(" %d",&d);
         temp->weight=d;
         temp->endpoint = nextnode;
     }
     
 }
-
 void del_edges(pnode vertex){
     pedge main = vertex->edges;
     while(main != NULL){
@@ -59,7 +51,6 @@ void del_edges(pnode vertex){
     }
 
 }
-
 void del_edge(pnode ver,pnode endp){
     pedge ehead = ver->edges;
     if(ehead->endpoint== endp){

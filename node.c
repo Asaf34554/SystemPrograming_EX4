@@ -6,10 +6,12 @@
 pnode create_node(int index){
     pnode nhead = (pnode)calloc(0,sizeof(node));
     nhead->node_num = index;
+    nhead->dist  =__INT_MAX__;
+    nhead->didvisit = 0;
     return nhead;
 }
-pnode get_node(pnode head, int ver){
-    pnode nget = head;
+pnode get_node(pnode *head, int ver){
+    pnode nget = (*head);
     while(nget->node_num!=ver)
     {
         nget = nget->next;
