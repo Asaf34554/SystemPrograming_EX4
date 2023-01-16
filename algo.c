@@ -50,8 +50,7 @@ char insert_node_cmd(pnode *head){
     scanf(" %d",&d);
     printf("bef get_node\n");
     pnode vertex = get_node(head,d);
-    printf("after get_node %d\n",vertex->node_num);
-
+    //printf("after get_node %d\n",vertex->node_num);
     if(vertex){
         printf("vertex:%d , edges:%d\n",vertex->node_num,vertex->edges->weight);
         del_edges(vertex);
@@ -59,16 +58,13 @@ char insert_node_cmd(pnode *head){
 
     }
     else{
-        printf("get to if (new ver)\n");
         vertex = create_node(d);
-        while(!(nHead->next)){
+        while(nHead->next){
             printf("nHead %d\n",nHead->node_num);
             nHead = nHead->next;
         }
         nHead->next=vertex;
-        printf("hey\n");
         printf("new ver: %d %d\n",nHead->node_num,vertex->node_num);
-
         return create_edges(vertex,head);
     }
 }

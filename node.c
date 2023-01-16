@@ -2,29 +2,33 @@
 #include <stdlib.h>
 #include "graph.h"
 #include "edges.h"
+#include <string.h>
 
 pnode create_node(int index){
-    pnode nhead = (pnode)calloc(0,sizeof(node));
+    pnode nhead = (pnode)malloc(sizeof(node));
+    memset(nhead,0,sizeof(node));
     nhead->node_num = index;
     nhead->dist  =__INT_MAX__;
     nhead->didvisit = 0;
+    nhead->next=NULL;
     return nhead;
 }
 pnode get_node(pnode *head, int ver){
     pnode nget = (*head);
-    while(!(nget->next) && nget->node_num != ver)
+    while(nget)
     {
+        printf("nget num:%d\n",nget->node_num);
+        if(nget->node_num == ver){
+            return nget;
+        }
+        if(!(nget->next)){
+            break;
+        }
         nget=nget->next;
+        
     }
-    if(nget->node_num==ver){
-        return nget;
-    }
-    else{
-        nget = nget->next;
-        return nget;
-    }
-    // printf("null\n");
-    // return nget;
+    printf("broke\n");
+    return nget->next;
 }
 void del_all_ver(pnode* head){
     pnode run = (*head);
