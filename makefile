@@ -2,10 +2,10 @@ CC = gcc
 FLAGS = -Wall -g -fPIC
 
 
-all: .graph edges.o node.o algo.o main.o
+all: graph edges.o node.o algo.o main.o
 
-.graph: main.o algo.o edges.o node.o
-	$(CC) $(FLAGS) main.o algo.o edges.o node.o -o .graph 
+graph: main.o algo.o edges.o node.o
+	$(CC) $(FLAGS) main.o algo.o edges.o node.o -o graph 
 algo.o: algo.c node.h edges.h graph.h
 	$(CC) $(FLAGS) -c algo.c
 main.o: main.c graph.h node.h
@@ -18,8 +18,9 @@ edges.o: edges.c edges.h node.h graph.h
 
 
 
-
+valgrind:
+	valgrind--leak-cheack=full --error-exitcode=1 ./graph < test.txt
 
 .PHONY: clean all
 clean: 
-	rm -f  *.o .graph 
+	rm -f  *.o graph 

@@ -17,7 +17,7 @@ char create_edges(pnode vertex, pnode* head){
         pedge temp = vertex->edges;
         scanf(" %s",c);
         printf("the first scanf in create_edges %c\n",c[0]);
-        if(c[0] == 'n' || c[0] == 'D' || c[0] == 'A' || c[0] == 'S' || c[0] == 'B' || c[0] == 'T' ){
+        if(c[0] == 'n' || c[0] == 'D' || c[0] == 'A' || c[0] == 'S' || c[0] == 'B' || c[0] == 'T'|| c[0] == 'Y' ){
             return c[0];
         }
         int x=0;
