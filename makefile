@@ -23,4 +23,4 @@ valgrind:
 
 .PHONY: clean all
 clean: 
-	rm -f  *.o graph 
+	rm -f  *.o .graph 
