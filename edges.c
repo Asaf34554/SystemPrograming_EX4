@@ -6,15 +6,16 @@
 
 
 pedge create_edge(){
-    pedge newedge = (pedge)calloc(0,sizeof(edge));
+    pedge newedge = (pedge)malloc(sizeof(edge));
+    memset(newedge,0,sizeof(edge));
     return newedge;
 }
 char create_edges(pnode vertex, pnode* head){
     char c[10] = "\0";
     int d=0;
-
+    pedge* temp;
     while(1){
-        pedge temp = vertex->edges;
+        temp = &vertex->edges;
         scanf(" %s",c);
         printf("the first scanf in create_edges %c\n",c[0]);
         if(c[0] == 'n' || c[0] == 'D' || c[0] == 'A' || c[0] == 'S' || c[0] == 'B' || c[0] == 'T'|| c[0] == 'Y' ){
@@ -27,21 +28,22 @@ char create_edges(pnode vertex, pnode* head){
 
         pnode nextnode = get_node(head,x);
         printf("nextnodnum:%d\n",nextnode->node_num);
-        while (temp!=NULL && temp->next != NULL)
-        {
-            temp = temp->next;
-        }
-        if(!temp){
-            temp=create_edge();
+        if((*temp)==NULL){
+            (*temp)=create_edge();
         }
         else{
-            temp->next = create_edge();
-            temp = temp->next;
+        while(!(*temp))
+        {
+            printf("e edge:%d\n",(*temp)->endpoint->node_num);
+            (*temp) = (*temp)->next;
+        }
+            (*temp)->next = create_edge();
+            (*temp) = (*temp)->next;
         }
         scanf(" %d",&d);
-        temp->weight=d;
-        temp->endpoint = nextnode;
-        printf("edge from %d to %d, weight:%d\n",vertex->node_num,temp->endpoint->node_num,temp->weight);
+        (*temp)->weight=d;
+        (*temp)->endpoint = nextnode;
+        printf("edge from %d to %d, weight:%d\n",vertex->node_num,(*temp)->endpoint->node_num,(*temp)->weight);
     }
     
 }
@@ -56,26 +58,35 @@ void del_edges(pnode vertex){
 }
 void del_edge(pnode ver,pnode endp){
     pedge ehead = ver->edges;
+    if(!ehead){
+        printf("empty\n");
+        return;
+    }
     if(ehead->endpoint== endp){
+        printf("first edge del %d\n",ehead->endpoint->node_num);
         ver->edges = ehead->next;
         free(ehead);
         return;
     }
-    while (ehead->next->endpoint != endp){
+    pedge prev;
+    while (ehead->endpoint != endp){
         if(ehead->next == NULL ){
+            printf("null\n");
             return;
         }
+        printf("not this edge %d",ehead->endpoint->node_num);
+        prev = ehead;
         ehead = ehead->next;     
     }
-   
-    if(ehead->next->next== NULL){
-        free(ehead->next);
+    if(ehead->next == NULL){
+        printf("last edge del %d\n",ehead->next->endpoint->node_num);
+        free(ehead);
     
     }
     else{
-        pedge del = ehead->next;
-        ehead->next = del->next;
-        free(del);
+        prev->next = ehead->next;
+        printf("deleting %d now %d pointing to %d\n",ehead->endpoint->node_num,prev->endpoint->node_num,prev->next->endpoint->node_num);
+        free(ehead);
     }
     return;
 }

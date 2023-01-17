@@ -50,10 +50,16 @@ char insert_node_cmd(pnode *head){
     scanf(" %d",&d);
     printf("bef get_node\n");
     pnode vertex = get_node(head,d);
-    //printf("after get_node %d\n",vertex->node_num);
     if(vertex){
-        printf("vertex:%d , edges:%d\n",vertex->node_num,vertex->edges->weight);
+        printf("after get_node %d\n",vertex->node_num);
+    }
+    
+    if(vertex){
+        //printf("vertex:%d , edges:%d\n",vertex->node_num,vertex->edges->weight);
         del_edges(vertex);
+        printf("hey\n");
+        //printf("vertex: %d\n",vertex->edges->weight);
+        printf("bye\n");
         return create_edges(vertex,head);
 
     }
@@ -71,11 +77,14 @@ char insert_node_cmd(pnode *head){
 void delete_node_cmd(pnode *head){
     int d;
     scanf(" %d",&d);
+    printf("bef getnode del\n");
     pnode ver = get_node(head,d);
+    printf("after getnode del %d\n",ver->edges->endpoint->node_num);
     if(!ver){
         return;
     }
-    del_ver(ver,head);    
+    del_ver(ver,head);
+    return;
     
 }
 void shortsPath_cmd(pnode head){

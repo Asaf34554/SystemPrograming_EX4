@@ -17,7 +17,6 @@ pnode get_node(pnode *head, int ver){
     pnode nget = (*head);
     while(nget)
     {
-        printf("nget num:%d\n",nget->node_num);
         if(nget->node_num == ver){
             return nget;
         }
@@ -27,7 +26,6 @@ pnode get_node(pnode *head, int ver){
         nget=nget->next;
         
     }
-    printf("broke\n");
     return nget->next;
 }
 void del_all_ver(pnode* head){
@@ -41,14 +39,18 @@ void del_all_ver(pnode* head){
     }
 }
 void del_ver(pnode ver,pnode* head){
+    printf("delver\n");
     pnode *phead = head;
-    pnode run = (*phead);
-    while(run != NULL){
+    pnode run = (*head);
+    while(run != NULL){     //runs over the linked list and delet all edges to vertex we want do delete
         if(run == ver){
+            printf("run=%d ,ver=%d \n",run->node_num,ver->node_num);
             run = run->next;
         }
         else{
+            printf("before dell\n");
             del_edge(run,ver);
+            printf("after dell \n");
             run=run->next;
             }
     }
