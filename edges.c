@@ -17,7 +17,7 @@ char create_edges(pnode *vertex, pnode* head){
     pedge runner;
     while(1){
         scanf(" %s",c);
-        if(c[0] == 'n' || c[0] == 'D' || c[0] == 'A' || c[0] == 'S'  ||c[0] == 'B'   || c[0] == 'T' || c[0] == 'Y' ){
+        if(c[0] == 'n' || c[0] == 'D' || c[0] == 'A' || c[0] == 'S'  ||c[0] == 'B'   || c[0] == 'T' || c[0] == 'Y' || c[0] == 'P' ){
             return c[0];
         }
         int x=0;

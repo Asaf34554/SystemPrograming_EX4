@@ -4,11 +4,10 @@
 
 
 int main(){
-    int flag = 1;
+    int flag = 1,dj;
     pnode head;
     char let = '\0';
     scanf(" %c",&let);
-    
     while(flag == 1){
         
         if(let == 'A'){
@@ -26,18 +25,33 @@ int main(){
             scanf(" %c",&let);
         }
         if(let == 'S'){
-            shortsPath_cmd(head);
+            int src,dest;
+            scanf(" %d",&src);
+            scanf(" %d",&dest);
+            dj = shortsPath_cmd(head,src,dest);
+            printf("Dijsktra shortest path: %d\nResize all vertexes\n",dj);
             scanf( " %c",&let);
         }
-        if(let == 'Y'){
+        if(let == 'P'){
             printGraph_cmd(head);
             scanf(" %c",&let);
         }
         if(let == 'T'){
-            //TSP_cmd(head);
+            int n,x;
+            scanf(" %d",&n);
+            int arr[n];
+            for(int i = 0; i < n ; i++){
+                scanf(" %d",&x);
+                arr[i]=x;
+            }
+            permut(head,arr,0,n-1);
+            int ans = reset_min();
+            printf("TSP shortest path: %d\n",ans);   
+            scanf(" %c",&let);
+        }
+        if(let == 'Y'){
             del_all_ver(&head);
-           // scanf(" %c",&let);
-           return 1;
+            return 1;
         }
         
     }

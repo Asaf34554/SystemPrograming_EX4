@@ -24,7 +24,9 @@ char insert_node_cmd(pnode *head);
 void delete_node_cmd(pnode *head);
 void printGraph_cmd(pnode head); //for self debug
 void deleteGraph_cmd(pnode* head);
-void shortsPath_cmd(pnode head);
-void TSP_cmd(pnode head);
+int shortsPath_cmd(pnode head,int src,int dst);
+void TSP_cmd(pnode head,int *arr,int size);
+void permut(pnode head,int *arr,int beg ,int fin);
+int reset_min();
 
 #endif
