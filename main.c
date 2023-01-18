@@ -24,11 +24,15 @@ int main(){
         }
         if(let == 'S'){
             shortsPath_cmd(head);
-            scanf( "%c",&let);
+            scanf( " %c",&let);
         }
         if(let == 'Y'){
             del_all_ver(&head);
             return 1;
+        }
+        if(let == 'T'){
+            printGraph_cmd(head);
+            scanf(" %c",&let);
         }
         
     }

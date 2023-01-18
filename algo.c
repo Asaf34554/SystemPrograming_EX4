@@ -32,12 +32,17 @@ char build_graph_cmd(pnode *head){
                 }
                 v = get_node(head,x);
                 printf("%d , %d\n",x,v->node_num);
-                c[0] = create_edges(v,head);
-                printf(" when we return from create_edges %s\n",c);
+                c[0] = create_edges(&v,head);
+                pedge temp = v->edges;
+                while (temp)
+                {
+                    //printf("we create edges %d\n",temp->endpoint->node_num);
+                    temp=temp->next;
+                }
+                
             }    
         }
         else {
-            printf("we go out from A func\n");
             return c[0];
         }
     }
@@ -60,7 +65,7 @@ char insert_node_cmd(pnode *head){
         printf("hey\n");
         //printf("vertex: %d\n",vertex->edges->weight);
         printf("bye\n");
-        return create_edges(vertex,head);
+        return create_edges(&vertex,head);
 
     }
     else{
@@ -71,15 +76,13 @@ char insert_node_cmd(pnode *head){
         }
         nHead->next=vertex;
         printf("new ver: %d %d\n",nHead->node_num,vertex->node_num);
-        return create_edges(vertex,head);
+        return create_edges(&vertex,head);
     }
 }
 void delete_node_cmd(pnode *head){
     int d;
     scanf(" %d",&d);
-    printf("bef getnode del\n");
     pnode ver = get_node(head,d);
-    printf("after getnode del %d\n",ver->edges->endpoint->node_num);
     if(!ver){
         return;
     }
@@ -148,4 +151,23 @@ void shortsPath_cmd(pnode head){
     }
     return;
     }
+void printGraph_cmd(pnode head){
+    pnode ncounter = head;
+    while (ncounter)
+    {
+        printf("\nEdge From Vertex : %d, \n",ncounter->node_num);
+        pedge* ecounter = &ncounter->edges; 
+        pedge ehelp = (*ecounter);
+        while((*ecounter)){
+            printf("To Vertex: %d,Weight: %d\n",(*ecounter)->endpoint->node_num,(*ecounter)->weight);
+            ehelp = (*ecounter);
+            ecounter = &(ehelp->next);
+            
+        }
 
+        ncounter = ncounter->next;
+        printf("out\n");
+        
+    }
+    return;
+}
