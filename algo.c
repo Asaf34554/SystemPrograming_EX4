@@ -33,6 +33,7 @@ char build_graph_cmd(pnode *head){
                 v = get_node(head,x);
                 printf("%d , %d\n",x,v->node_num);
                 c[0] = create_edges(&v,head);
+<<<<<<< HEAD
                 pedge temp = v->edges;
                 while (temp)
                 {
@@ -43,6 +44,13 @@ char build_graph_cmd(pnode *head){
             }    
         }
         else {
+=======
+                printf(" when we return from create_edges %s\n",c);
+            }    
+        }
+        else {
+            printf("we go out from A func\n");
+>>>>>>> 4ee0069 (new commit)
             return c[0];
         }
     }
@@ -82,7 +90,13 @@ char insert_node_cmd(pnode *head){
 void delete_node_cmd(pnode *head){
     int d;
     scanf(" %d",&d);
+<<<<<<< HEAD
     pnode ver = get_node(head,d);
+=======
+    printf("bef getnode del\n");
+    pnode ver = get_node(head,d);
+    printf("after getnode del %d\n",ver->edges->endpoint->node_num);
+>>>>>>> 4ee0069 (new commit)
     if(!ver){
         return;
     }
@@ -155,7 +169,11 @@ void printGraph_cmd(pnode head){
     pnode ncounter = head;
     while (ncounter)
     {
+<<<<<<< HEAD
         printf("\nEdge From Vertex : %d, \n",ncounter->node_num);
+=======
+        printf("Edge From Vertex : %d, \n",ncounter->node_num);
+>>>>>>> 4ee0069 (new commit)
         pedge* ecounter = &ncounter->edges; 
         pedge ehelp = (*ecounter);
         while((*ecounter)){
@@ -164,9 +182,13 @@ void printGraph_cmd(pnode head){
             ecounter = &(ehelp->next);
             
         }
+<<<<<<< HEAD
 
         ncounter = ncounter->next;
         printf("out\n");
+=======
+        ncounter = ncounter->next;
+>>>>>>> 4ee0069 (new commit)
         
     }
     return;
