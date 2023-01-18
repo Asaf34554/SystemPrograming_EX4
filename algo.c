@@ -91,7 +91,8 @@ void delete_node_cmd(pnode *head){
     
 }
 void shortsPath_cmd(pnode head){
-    int src,dest,minlast;
+    printf("\nEnter To ShortPath func\n");
+    int src,dest;
     scanf(" %d",&src);
     scanf(" %d",&dest);
     pnode nsrc = get_node(&head,src);
@@ -99,47 +100,55 @@ void shortsPath_cmd(pnode head){
     pnode ndst = get_node(&head,dest);
     pedge e_run = nsrc->edges;
     if(!(e_run)){
-        printf("Dijsktra shortest path: %d",-1);
+        printf("Dijsktra shortest path: %d\n",-1);
         return;
     }
     pnode v_runner = nsrc;
-    while(v_runner){
+    while(v_runner && v_runner!=ndst){
+        printf("Enter to the big while\n");
         e_run = v_runner->edges;            //setting runner to edges
-        minlast = e_run->endpoint->node_num;    //setting sefault minimum distance last vertex
+        pnode minlast = e_run->endpoint;    //setting default minimum distance last vertex
         while(e_run && v_runner!=ndst){
             if(e_run->endpoint == ndst){  //the edge endpoint is the destination vertex
                 if(ndst->dist > e_run->weight+v_runner->dist){  //checking destination distance field
                     ndst->dist=e_run->weight+v_runner->dist;     //setting new distance
-//                    ndst->prev=v_runner->node_num;                  //setting the last vertex in route                     
+                    printf("E_Run endpoint = Node_Dest\n");
+                    if( minlast->dist > e_run->endpoint->dist ){
+                        minlast = e_run->endpoint;
+                    }
                 }
             }
             else{   
                 if(e_run->endpoint->dist > e_run->weight+v_runner->dist){     //checking endpoint vertex distance field
                     e_run->endpoint->dist = e_run->weight+v_runner->dist;
+                    printf("E_Run endpoint != Node_Dest\n");
 //                    e_run->endpoint->prev=v_runner->node_num;
-                    if(minlast>e_run->endpoint->dist){
-                        minlast = e_run->endpoint->node_num;
+                    if( minlast->dist > e_run->endpoint->dist ){
+                        minlast = e_run->endpoint;
                     }
                 }
             }
-                e_run=e_run->next;          //next edge           
+            printf("EDGE++\n");
+            e_run=e_run->next;          //next edge           
         }
-        pedge tmpedg=v_runner->edges;
-        while(tmpedg->endpoint->node_num != minlast && tmpedg){  //checking for the endpoint with the lowest distance and we one we didnt visited before
-            tmpedg = tmpedg->next;
-        }
-        while(tmpedg->endpoint->didvisit){                      //checking if we visited the min endpoint if yes finding for another
-            if(!(tmpedg->next) && tmpedg->next->endpoint->didvisit){
-                tmpedg = tmpedg->next;
-            }
-            else{
-                break;
-            }
-        }
+        printf("NODE++\n");
+        // pedge tmpedg=v_runner->edges;
+        // while(tmpedg->endpoint->node_num != minlast && tmpedg){  //checking for the endpoint with the lowest distance and we one we didnt visited before
+        //     tmpedg = tmpedg->next;
+        // }
+        // while(tmpedg->endpoint->didvisit){                      //checking if we visited the min endpoint if yes finding for another
+        //     if(!(tmpedg->next) && tmpedg->next->endpoint->didvisit){
+        //         tmpedg = tmpedg->next;
+        //     }
+        //     else{
+        //         break;
+        //     }
+        // }
         v_runner->didvisit=1;
-        v_runner=tmpedg->endpoint;                //next vertex
+        v_runner=minlast;                //next vertex
     }
-    printf("Dijsktra shortest path: %d",ndst->dist);
+    printf("Dijsktra shortest path: %d\nResize all vertexes\n",ndst->dist);
+
 
     //reseting all data
     pnode reset = head;
@@ -149,6 +158,7 @@ void shortsPath_cmd(pnode head){
 //        reset->prev=-1;
         reset=reset->next;
     }
+    printf("Go Out From S Func");
     return;
     }
 void printGraph_cmd(pnode head){
