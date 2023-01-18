@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 #include <stdio.h>
 #include <stdlib.h>
 #include "graph.h"
@@ -78,4 +76,3 @@ void del_ver(pnode ver,pnode* head){
 }
 
 
->>>>>>> 9536093 (new commit)

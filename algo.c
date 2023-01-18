@@ -33,10 +33,6 @@ char build_graph_cmd(pnode *head){
                 v = get_node(head,x);
                 printf("%d , %d\n",x,v->node_num);
                 c[0] = create_edges(&v,head);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9536093 (new commit)
                 pedge temp = v->edges;
                 while (temp)
                 {
@@ -44,22 +40,9 @@ char build_graph_cmd(pnode *head){
                     temp=temp->next;
                 }
                 
-<<<<<<< HEAD
             }    
         }
         else {
-=======
-                printf(" when we return from create_edges %s\n",c);
-            }    
-        }
-        else {
-            printf("we go out from A func\n");
->>>>>>> 4ee0069 (new commit)
-=======
-            }    
-        }
-        else {
->>>>>>> 9536093 (new commit)
             return c[0];
         }
     }
@@ -99,17 +82,7 @@ char insert_node_cmd(pnode *head){
 void delete_node_cmd(pnode *head){
     int d;
     scanf(" %d",&d);
-<<<<<<< HEAD
-<<<<<<< HEAD
     pnode ver = get_node(head,d);
-=======
-    printf("bef getnode del\n");
-    pnode ver = get_node(head,d);
-    printf("after getnode del %d\n",ver->edges->endpoint->node_num);
->>>>>>> 4ee0069 (new commit)
-=======
-    pnode ver = get_node(head,d);
->>>>>>> 9536093 (new commit)
     if(!ver){
         return;
     }
@@ -118,7 +91,6 @@ void delete_node_cmd(pnode *head){
     
 }
 void shortsPath_cmd(pnode head){
-    printf("\nWelcome to shortPath\n");
     int src,dest,minlast;
     scanf(" %d",&src);
     scanf(" %d",&dest);
@@ -183,15 +155,7 @@ void printGraph_cmd(pnode head){
     pnode ncounter = head;
     while (ncounter)
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
         printf("\nEdge From Vertex : %d, \n",ncounter->node_num);
-=======
-        printf("Edge From Vertex : %d, \n",ncounter->node_num);
->>>>>>> 4ee0069 (new commit)
-=======
-        printf("\nEdge From Vertex : %d, \n",ncounter->node_num);
->>>>>>> 9536093 (new commit)
         pedge* ecounter = &ncounter->edges; 
         pedge ehelp = (*ecounter);
         while((*ecounter)){
@@ -200,19 +164,9 @@ void printGraph_cmd(pnode head){
             ecounter = &(ehelp->next);
             
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         ncounter = ncounter->next;
         printf("out\n");
-=======
-        ncounter = ncounter->next;
->>>>>>> 4ee0069 (new commit)
-=======
-
-        ncounter = ncounter->next;
-        printf("out\n");
->>>>>>> 9536093 (new commit)
         
     }
     return;
