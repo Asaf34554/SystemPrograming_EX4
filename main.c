@@ -12,6 +12,9 @@ int main(){
     while(flag == 1){
         
         if(let == 'A'){
+            if(head != NULL){
+                del_all_ver(&head);
+            }
             let = build_graph_cmd(&head);
             
         }
@@ -27,12 +30,14 @@ int main(){
             scanf( " %c",&let);
         }
         if(let == 'Y'){
-            del_all_ver(&head);
-            return 1;
-        }
-        if(let == 'T'){
             printGraph_cmd(head);
             scanf(" %c",&let);
+        }
+        if(let == 'T'){
+            //TSP_cmd(head);
+            del_all_ver(&head);
+           // scanf(" %c",&let);
+           return 1;
         }
         
     }

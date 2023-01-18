@@ -30,15 +30,12 @@ char create_edges(pnode *vertex, pnode* head){
 
         scanf(" %d",&d);
         if(!(*temp)){
-            printf("empty edges creating one\n");
             (*temp)=create_edge();
             (*temp)->weight=d;
             (*temp)->endpoint=nextnode;
-            //temp=&runner;
             printf("new edge from %d to %d, weight:%d\n\n\n",(*vertex)->node_num,(*temp)->endpoint->node_num,(*temp)->weight);
         }
         else{
-            printf("have edges adding another\n");
             pedge* runner2 = temp;
             while((*temp)!=NULL)
             {
@@ -69,7 +66,6 @@ void del_edges(pnode vertex){
 void del_edge(pnode ver,pnode endp){
     pedge ehead = ver->edges;
     if(!ehead){
-        printf("empty\n");
         return;
     }
     if(ehead->endpoint== endp){
@@ -81,7 +77,6 @@ void del_edge(pnode ver,pnode endp){
     pedge prev;
     while (ehead->endpoint != endp){
         if(ehead->next == NULL ){
-            printf("null\n");
             return;
         }
         printf("not this edge %d\n",ehead->endpoint->node_num);

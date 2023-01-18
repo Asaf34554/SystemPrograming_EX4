@@ -36,7 +36,6 @@ char build_graph_cmd(pnode *head){
                 pedge temp = v->edges;
                 while (temp)
                 {
-                    //printf("we create edges %d\n",temp->endpoint->node_num);
                     temp=temp->next;
                 }
                 
@@ -53,25 +52,18 @@ char insert_node_cmd(pnode *head){
     pnode nHead = (*head);
     printf("entered B, head first ver=%d\n",nHead->node_num);
     scanf(" %d",&d);
-    printf("bef get_node\n");
     pnode vertex = get_node(head,d);
-    if(vertex){
-        printf("after get_node %d\n",vertex->node_num);
-    }
     
     if(vertex){
-        //printf("vertex:%d , edges:%d\n",vertex->node_num,vertex->edges->weight);
+        printf("after get_node %d\n",vertex->node_num);
         del_edges(vertex);
-        printf("hey\n");
         //printf("vertex: %d\n",vertex->edges->weight);
-        printf("bye\n");
         return create_edges(&vertex,head);
 
     }
     else{
         vertex = create_node(d);
         while(nHead->next){
-            printf("nHead %d\n",nHead->node_num);
             nHead = nHead->next;
         }
         nHead->next=vertex;
@@ -100,14 +92,19 @@ void shortsPath_cmd(pnode head){
     pnode ndst = get_node(&head,dest);
     pedge e_run = nsrc->edges;
     if(!(e_run)){
+        nsrc->dist=__INT_MAX__;
         printf("Dijsktra shortest path: %d\n",-1);
         return;
     }
     pnode v_runner = nsrc;
     while(v_runner && v_runner!=ndst){
         printf("Enter to the big while\n");
-        e_run = v_runner->edges;            //setting runner to edges
+        e_run = v_runner->edges;           //setting runner to edges
         pnode minlast = e_run->endpoint;    //setting default minimum distance last vertex
+        while(e_run && minlast->didvisit){
+            e_run=e_run->next;
+            minlast=e_run->endpoint;
+        }
         while(e_run && v_runner!=ndst){
             if(e_run->endpoint == ndst){  //the edge endpoint is the destination vertex
                 if(ndst->dist > e_run->weight+v_runner->dist){  //checking destination distance field
@@ -122,43 +119,41 @@ void shortsPath_cmd(pnode head){
                 if(e_run->endpoint->dist > e_run->weight+v_runner->dist){     //checking endpoint vertex distance field
                     e_run->endpoint->dist = e_run->weight+v_runner->dist;
                     printf("E_Run endpoint != Node_Dest\n");
-//                    e_run->endpoint->prev=v_runner->node_num;
-                    if( minlast->dist > e_run->endpoint->dist ){
-                        minlast = e_run->endpoint;
-                    }
                 }
+                if(minlast->dist > e_run->endpoint->dist){
+                    minlast = e_run->endpoint;
+                }
+                
+                
             }
             printf("EDGE++\n");
             e_run=e_run->next;          //next edge           
         }
         printf("NODE++\n");
-        // pedge tmpedg=v_runner->edges;
-        // while(tmpedg->endpoint->node_num != minlast && tmpedg){  //checking for the endpoint with the lowest distance and we one we didnt visited before
-        //     tmpedg = tmpedg->next;
-        // }
-        // while(tmpedg->endpoint->didvisit){                      //checking if we visited the min endpoint if yes finding for another
-        //     if(!(tmpedg->next) && tmpedg->next->endpoint->didvisit){
-        //         tmpedg = tmpedg->next;
-        //     }
-        //     else{
-        //         break;
-        //     }
-        // }
         v_runner->didvisit=1;
         v_runner=minlast;                //next vertex
+        // while (e_run->endpoint->didvisit==1 && e_run != NULL){
+        //     e_run=e_run->next;
+        // }
+        
     }
-    printf("Dijsktra shortest path: %d\nResize all vertexes\n",ndst->dist);
-
+    if(ndst->dist == __INT_MAX__){
+        printf("Dijsktra shortest path: %d\nResize all vertexes\n",-1);
+    }
+    else{
+        printf("Dijsktra shortest path: %d\nResize all vertexes\n",ndst->dist);
+    }
 
     //reseting all data
     pnode reset = head;
     while(reset!=NULL){
+        printf("Reset The Values");
         reset->didvisit=0;
         reset->dist=__INT_MAX__;
 //        reset->prev=-1;
         reset=reset->next;
     }
-    printf("Go Out From S Func");
+    printf("Go Out From S Func\n");
     return;
     }
 void printGraph_cmd(pnode head){

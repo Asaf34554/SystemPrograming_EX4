@@ -39,8 +39,6 @@ void del_all_ver(pnode* head){
     }
 }
 void del_ver(pnode ver,pnode* head){
-    printf("\n\ndel vertex\n");
-   // pnode *phead = head;
     pnode run = (*head);
     while(run != NULL){     //runs over the linked list and delet all edges to vertex we want do delete
         if(run == ver){
@@ -48,13 +46,10 @@ void del_ver(pnode ver,pnode* head){
             run = run->next;
         }
         else{
-            printf("before dell\n");
             del_edge(run,ver);
-            printf("after dell \n");
             run=run->next;
             }
     }
-    printf("\nnow we delete the edges in the vertex\n");
     run = (*head);
     if((*head) == ver){
         printf("delete first ver: %d\n",ver->node_num);
