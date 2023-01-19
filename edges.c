@@ -69,7 +69,7 @@ void del_edge(pnode ver,pnode endp){
         return;
     }
     if(ehead->endpoint== endp){
-        printf("first edge del %d\n",ehead->endpoint->node_num);
+      //  printf("first edge del %d\n",ehead->endpoint->node_num);
         ver->edges = ehead->next;
         free(ehead);
         return;
@@ -79,19 +79,19 @@ void del_edge(pnode ver,pnode endp){
         if(ehead->next == NULL ){
             return;
         }
-        printf("not this edge %d\n",ehead->endpoint->node_num);
+       // printf("not this edge %d\n",ehead->endpoint->node_num);
         prev = ehead;
         ehead = ehead->next;     
     }
     if(ehead->next == NULL){
-        printf("last edge del %d\n",ehead->endpoint->node_num);
+     //   printf("last edge del %d\n",ehead->endpoint->node_num);
         free(ehead);
         prev->next=NULL;
     
     }
     else{
         prev->next = ehead->next;
-        printf("deleting %d now %d pointing to %d\n",ehead->endpoint->node_num,prev->endpoint->node_num,prev->next->endpoint->node_num);
+        //printf("deleting %d now %d pointing to %d\n",ehead->endpoint->node_num,prev->endpoint->node_num,prev->next->endpoint->node_num);
         free(ehead);
     }
     return;

@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include "graph.h"
 #include <stdlib.h>
@@ -94,7 +95,7 @@ int shortsPath_cmd(pnode head,int src,int dst){
     pedge e_run = nsrc->edges;
     if(!(e_run)){
         nsrc->dist=__INT_MAX__;
-        printf("why\n");
+     //   printf("why\n");
         return -1;
     }
     pnode v_runner = nsrc;
@@ -102,9 +103,12 @@ int shortsPath_cmd(pnode head,int src,int dst){
     while(v_runner && v_runner!=ndst){
         // printf("Enter to the big while\n");
         e_run = v_runner->edges;           //setting runner to edges
+        printf("why\n");
         pnode minlast = e_run->endpoint;    //setting default minimum distance last vertex
-        while(e_run && minlast->didvisit){
+        printf("why\n");
+        while(minlast->didvisit && e_run){
             e_run=e_run->next;
+            printf("!!!!\n");
             minlast=e_run->endpoint;
         }
         while(e_run && v_runner!=ndst){
@@ -137,9 +141,17 @@ int shortsPath_cmd(pnode head,int src,int dst){
         v_runner->didvisit=1;
         if(minlast==NULL){
             minlast=minlast2;
+            printf("Go to ver: %d\n",minlast->node_num);
         }
         else{
             v_runner=minlast;                //next vertex
+            printf("Go to ver: %d\n",v_runner->node_num);
+            if(v_runner->edges == NULL && v_runner != ndst){
+                v_runner->didvisit = 1;
+                v_runner = minlast2;
+                printf("Go to ver: %d\n",v_runner->node_num);
+                 
+            }   
         }    
     }
     if(ndst->dist == __INT_MAX__){
