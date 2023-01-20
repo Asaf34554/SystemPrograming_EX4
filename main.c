@@ -53,11 +53,11 @@ int main(){
         }
         if(let== EOF || let == 'Y' || let == '\n'){
             del_all_ver(&head);
-            return 1;
+            return 0;
         }
         
 
     }
     del_all_ver(&head);
-    return 1;
+    return 0;
 }
