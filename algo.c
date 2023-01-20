@@ -13,12 +13,10 @@ char build_graph_cmd(pnode *head){
     //pnode temp = &nhead;
     int x,n,i=0;
     char c[10] = "\0";
-    printf("Please enter the number of vertices: \n");
     scanf(" %d",&n);
     pnode temp = create_node(i);
     (*nhead) = temp;
     for(i=1;i<n;i++){
-        printf(" %d\n",temp->node_num);
         pnode temp1 = create_node(i);
         temp->next=temp1;
         temp=temp1;
@@ -34,7 +32,6 @@ char build_graph_cmd(pnode *head){
                     x=x*10+(c[i]-48);
                 }
                 v = get_node(head,x);
-                printf("%d , %d\n",x,v->node_num);
                 c[0] = create_edges(&v,head);
                 pedge temp = v->edges;
                 while (temp)
@@ -53,14 +50,13 @@ char build_graph_cmd(pnode *head){
 char insert_node_cmd(pnode *head){
     int d;
     pnode nHead = (*head);
-    printf("entered B, head first ver=%d\n",nHead->node_num);
     scanf(" %d",&d);
     pnode vertex = get_node(head,d);
     
     if(vertex){
-        printf("after get_node %d\n",vertex->node_num);
         del_edges(vertex);
-        //printf("vertex: %d\n",vertex->edges->weight);
+        // printf("hey\n");
+        // printf("vertex: %d\n",vertex->edges->weight);
         return create_edges(&vertex,head);
 
     }
@@ -70,7 +66,6 @@ char insert_node_cmd(pnode *head){
             nHead = nHead->next;
         }
         nHead->next=vertex;
-        printf("new ver: %d %d\n",nHead->node_num,vertex->node_num);
         return create_edges(&vertex,head);
     }
 }
@@ -85,47 +80,46 @@ void delete_node_cmd(pnode *head){
     return;
     
 }
-int shortsPath_cmd(pnode head,int src,int dst){
-    int ret;
-    printf("\nEnter To ShortPath func\n");
+int shortsPath_cmd(pnode head,int src,int dst, int* arr,int size, int* flag){
+    int ret,counter=0,out=1;
+    int *temp = arr;
     pnode nsrc = get_node(&head,src);
     nsrc->dist=0;
     pnode ndst = get_node(&head,dst);
-    printf("Node Start: %d, Node End: %d\n",nsrc->node_num,ndst->node_num);
     pedge e_run = nsrc->edges;
     if(!(e_run)){
         nsrc->dist=__INT_MAX__;
-     //   printf("why\n");
         return -1;
     }
     pnode v_runner = nsrc;
     pnode minlast2;
     while(v_runner && v_runner!=ndst){
-        // printf("Enter to the big while\n");
         e_run = v_runner->edges;           //setting runner to edges
-        printf("why\n");
         pnode minlast = e_run->endpoint;    //setting default minimum distance last vertex
-        printf("why\n");
-        while(minlast->didvisit && e_run){
-            e_run=e_run->next;
-            printf("!!!!\n");
-            minlast=e_run->endpoint;
+        while(e_run&&minlast->didvisit){
+            if(e_run->next!=NULL){
+                e_run=e_run->next;
+                minlast=e_run->endpoint;
+            }
+            else{
+                e_run=e_run->next;
+                out=0;
+                break;
+            }
         }
         while(e_run && v_runner!=ndst){
             if(e_run->endpoint == ndst){  //the edge endpoint is the destination vertex
                 if(ndst->dist > e_run->weight+v_runner->dist){  //checking destination distance field
                     ndst->dist=e_run->weight+v_runner->dist;     //setting new distance
-                    // printf("E_Run endpoint = Node_Dest\n");
-                    if( minlast->dist > e_run->endpoint->dist ){
+                    if( minlast->dist >= e_run->endpoint->dist ){
                         minlast2=minlast;
                         minlast = e_run->endpoint;
                     }
                 }
             }
-            else{   
+            else{
                 if(e_run->endpoint->dist > e_run->weight+v_runner->dist){     //checking endpoint vertex distance field
                     e_run->endpoint->dist = e_run->weight+v_runner->dist;
-                    // printf("E_Run endpoint != Node_Dest\n");
                 }
                 if(minlast->dist > e_run->endpoint->dist){
                     minlast2 = minlast;
@@ -134,23 +128,38 @@ int shortsPath_cmd(pnode head,int src,int dst){
                 
                 
             }
-            // printf("EDGE++\n");
-            e_run=e_run->next;          //next edge           
+            while(e_run->next&&e_run->next->endpoint->didvisit){
+                e_run=e_run->next;          //next edge
+            }
+            e_run=e_run->next;
+            
+    
+   
         }
-        // printf("NODE++\n");
         v_runner->didvisit=1;
         if(minlast==NULL){
             minlast=minlast2;
-            printf("Go to ver: %d\n",minlast->node_num);
+        }
+        else if(out==0){
+            break;
         }
         else{
             v_runner=minlast;                //next vertex
-            printf("Go to ver: %d\n",v_runner->node_num);
-            if(v_runner->edges == NULL && v_runner != ndst){
+            for(int i=0;i<size-1;i++){
+                if(temp[i]==v_runner->node_num){
+                    counter++;
+                    break;
+                }
+            }
+            if(v_runner->edges == NULL){
                 v_runner->didvisit = 1;
                 v_runner = minlast2;
-                printf("Go to ver: %d\n",v_runner->node_num);
-                 
+                for(int i=0;i<size;i++){
+                if(temp[i]==v_runner->node_num){
+                    counter++;
+                    break;
+                }
+            }
             }   
         }    
     }
@@ -160,17 +169,19 @@ int shortsPath_cmd(pnode head,int src,int dst){
     else{
         ret = ndst->dist;
     }
-
+    if(counter>=size-1){
+        *flag=1;
+    }
+    else{
+        *flag=0;
+    }
     //reseting all data
     pnode reset = head;
     while(reset!=NULL){
-       // printf("Reset The Values");
         reset->didvisit=0;
         reset->dist=__INT_MAX__;
-//        reset->prev=-1;
         reset=reset->next;
     }
-    printf("Go Out From S Func\n");
     return ret;
     }
 void printGraph_cmd(pnode head){
@@ -187,9 +198,7 @@ void printGraph_cmd(pnode head){
             
         }
 
-        ncounter = ncounter->next;
-        printf("out\n");
-        
+        ncounter = ncounter->next;        
     }
     return;
 }
@@ -209,20 +218,31 @@ int reset_min(){
     return temp;
 }
 void TSP_cmd(pnode head,int *arr,int size){
-    int tmp_min = 0;        
+    int tmp_min=0,flag=0;      
     int runner = arr[0];
-    int next_runner = 0;     
-
+    int next_runner = 0;
     for (int i = 1; i < size; ++i)
     {
+        flag=0;
         next_runner = arr[i];
-        tmp_min += shortsPath_cmd(head,runner,next_runner); 
+        int prevmin = shortsPath_cmd(head,runner,next_runner,arr,size-1,&flag);
+        if(prevmin!=-1){
+            tmp_min +=  prevmin;
+        }
+        else{
+            tmp_min=__INT_MAX__;
+            break;
+        }
         runner = next_runner; 
 
     }
-    if (tsp_min> tmp_min)
+    if (tsp_min > tmp_min)
     {
-        tsp_min = tmp_min;
+        
+        if(tmp_min!=0){
+            tsp_min = tmp_min;
+        }
+        
     }
 }
 void permut(pnode head,int *arr,int beg ,int fin){

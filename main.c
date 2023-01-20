@@ -6,10 +6,9 @@
 int main(){
     int flag = 1,dj;
     pnode head;
-    char let = '\0';
-    scanf(" %c",&let);
-    while(flag == 1){
-        
+    char let = 'K';
+    scanf("%c",&let);
+    while(flag){
         if(let == 'A'){
             if(head != NULL){
                 del_all_ver(&head);
@@ -28,9 +27,9 @@ int main(){
             int src,dest;
             scanf(" %d",&src);
             scanf(" %d",&dest);
-            dj = shortsPath_cmd(head,src,dest);
+            dj = shortsPath_cmd(head,src,dest,NULL,0,&flag);
             printf("Dijsktra shortest path: %d\nResize all vertexes\n",dj);
-            scanf( " %c",&let);
+            scanf(" %c",&let);
         }
         if(let == 'P'){
             printGraph_cmd(head);
@@ -53,7 +52,5 @@ int main(){
             del_all_ver(&head);
             return 1;
         }
-        
     }
-    
 }
