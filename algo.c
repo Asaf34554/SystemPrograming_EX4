@@ -10,7 +10,6 @@ int tsp_min = __INT_MAX__;
 
 char build_graph_cmd(pnode *head){
     pnode *nhead = head;
-    //pnode temp = &nhead;
     int x,n,i=0;
     char c[10] = "\0";
     scanf(" %d",&n);
@@ -55,8 +54,6 @@ char insert_node_cmd(pnode *head){
     
     if(vertex){
         del_edges(vertex);
-        // printf("hey\n");
-        // printf("vertex: %d\n",vertex->edges->weight);
         return create_edges(&vertex,head);
 
     }
@@ -121,7 +118,7 @@ int shortsPath_cmd(pnode head,int src,int dst, int* arr,int size, int* flag){
                 if(e_run->endpoint->dist > e_run->weight+v_runner->dist){     //checking endpoint vertex distance field
                     e_run->endpoint->dist = e_run->weight+v_runner->dist;
                 }
-                if(minlast->dist > e_run->endpoint->dist){
+                if(minlast->dist >= e_run->endpoint->dist){
                     minlast2 = minlast;
                     minlast = e_run->endpoint;
                 }
@@ -138,7 +135,7 @@ int shortsPath_cmd(pnode head,int src,int dst, int* arr,int size, int* flag){
         }
         v_runner->didvisit=1;
         if(minlast==NULL){
-            minlast=minlast2;
+               minlast=minlast2; 
         }
         else if(out==0){
             break;
@@ -153,13 +150,19 @@ int shortsPath_cmd(pnode head,int src,int dst, int* arr,int size, int* flag){
             }
             if(v_runner->edges == NULL){
                 v_runner->didvisit = 1;
-                v_runner = minlast2;
-                for(int i=0;i<size;i++){
-                if(temp[i]==v_runner->node_num){
-                    counter++;
+                if(v_runner!=minlast2){
+                    v_runner = minlast2;
+                    for(int i=0;i<size;i++){
+                        if(temp[i]==v_runner->node_num){
+                            counter++;
+                            break;
+                        }
+                    } 
+                }
+                else{
                     break;
                 }
-            }
+
             }   
         }    
     }

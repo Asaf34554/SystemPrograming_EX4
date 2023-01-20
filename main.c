@@ -6,9 +6,9 @@
 int main(){
     int flag = 1,dj;
     pnode head;
-    char let = 'K';
-    scanf("%c",&let);
-    while(flag){
+    char let = 'A';
+    let = getchar();
+    while(let!=EOF&&let!='\n'){
         if(let == 'A'){
             if(head != NULL){
                 del_all_ver(&head);
@@ -21,36 +21,43 @@ int main(){
         }
         if(let == 'D'){
             delete_node_cmd(&head);
-            scanf(" %c",&let);
+            let = getchar();
         }
         if(let == 'S'){
             int src,dest;
             scanf(" %d",&src);
             scanf(" %d",&dest);
             dj = shortsPath_cmd(head,src,dest,NULL,0,&flag);
-            printf("Dijsktra shortest path: %d\nResize all vertexes\n",dj);
-            scanf(" %c",&let);
+            printf("Dijsktra shortest path: %d\n",dj);
+            let = getchar();
         }
         if(let == 'P'){
             printGraph_cmd(head);
-            scanf(" %c",&let);
+            let = getchar();
         }
         if(let == 'T'){
             int n,x;
-            scanf(" %d",&n);
+            scanf("%d",&n);
             int arr[n];
             for(int i = 0; i < n ; i++){
-                scanf(" %d",&x);
+                scanf("%d",&x);
                 arr[i]=x;
             }
             permut(head,arr,0,n-1);
             int ans = reset_min();
             printf("TSP shortest path: %d\n",ans);   
-            scanf(" %c",&let);
+            let = getchar();
         }
-        if(let == 'Y'){
+        if(let == ' '){
+            let = getchar();
+        }
+        if(let== EOF || let == 'Y' || let == '\n'){
             del_all_ver(&head);
             return 1;
         }
+        
+
     }
+    del_all_ver(&head);
+    return 1;
 }
