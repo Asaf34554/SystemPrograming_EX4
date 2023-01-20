@@ -28,7 +28,7 @@ int main(){
             scanf(" %d",&src);
             scanf(" %d",&dest);
             dj = shortsPath_cmd(head,src,dest,NULL,0,&flag);
-            printf("Dijsktra shortest path: %d\n",dj);
+            printf("Dijsktra shortest path: %d \n",dj);
             let = getchar();
         }
         if(let == 'P'){
