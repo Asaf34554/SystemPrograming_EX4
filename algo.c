@@ -10,15 +10,21 @@ int tsp_min = __INT_MAX__;
 
 char build_graph_cmd(pnode *head){
     pnode *nhead = head;
-    int x,n,i=0;
+    pnode temp,temp1;
+    int x,n;
     char c[10] = "\0";
     scanf(" %d",&n);
-    pnode temp = create_node(i);
-    (*nhead) = temp;
-    for(i=1;i<n;i++){
-        pnode temp1 = create_node(i);
-        temp->next=temp1;
-        temp=temp1;
+    for(int i=0;i<n;i++){
+        if(i==0){
+            temp = create_node(i);
+            (*nhead) = temp;
+        }
+        else{
+            temp1 = create_node(i);
+            temp->next=temp1;
+            temp=temp1;    
+        }
+
     }
     pnode v;
     scanf(" %s",c);

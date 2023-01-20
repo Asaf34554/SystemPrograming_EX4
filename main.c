@@ -5,7 +5,7 @@
 
 int main(){
     int flag = 1,dj;
-    pnode head;
+    pnode head=NULL;
     char let = 'A';
     let = getchar();
     while(let!=EOF&&let!='\n'){

@@ -30,12 +30,12 @@ pnode get_node(pnode *head, int ver){
 }
 void del_all_ver(pnode* head){
     pnode run = (*head);
-    while (!run)
+    while (run)
     {
         del_edges(run);
         pnode temp = run->next;
         free(run);
-        run= temp;
+        run=temp;
     }
 }
 void del_ver(pnode ver,pnode* head){
