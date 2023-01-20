@@ -45,7 +45,7 @@ int main(){
             }
             permut(head,arr,0,n-1);
             int ans = reset_min();
-            printf("TSP shortest path: %d\n",ans);   
+            printf("TSP shortest path: %d \n",ans);   
             let = getchar();
         }
         if(let == ' '){
